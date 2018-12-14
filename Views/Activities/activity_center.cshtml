@@ -1,0 +1,73 @@
+@model Participant
+<link rel="stylesheet" type="text/css" media="screen" href="~/css/Wedding/add_wedding.css"/>
+
+<style>
+
+</style>
+<partial name="header"/>
+<div class="table">
+    <table class="table table-striped" class="table table-bordered" class="table table-striped">
+        <thead>
+            <tr>
+                <th  scope="col">Activity</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Event Coordinator</th>
+                <th scope="col">Number of Participants</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+        <tbody>
+            @{
+                @foreach(var a in @ViewBag.allactivities)
+                { var t=false;
+                    <tr>
+                        <td><a href="activity/@a.ActivityId">@a.activity_name</a></td>
+                        <td>@a.date_time.ToString("MMM dd yyyy")</td>
+                        <td>@a.duration_time  @a.duration_length</td>
+                        <td>a.Users.fname</td>
+                        <td>@a.Participate.Count</td>
+                        <td>    
+                            @if(@a.CreatorID == @ViewBag.Id)
+                            {
+                                <a class="button" href="/delete/@a.ActivityId">Cancel Activity</a>
+                            }
+                            else 
+                            {
+                                @foreach(var e in a.Participant)
+                                    {
+                                        if(@e.UserId == @ViewBag.id)
+                                        {
+                                            t=true;
+                                        }
+                                    }
+                                @if(t==true)
+                                {
+                                    <form action="/leave/@a.ActivityId"  method="post">
+                                        <input type="hidden" asp-for="UserId" value="@ViewBag.id">
+                                        <input type="hidden" asp-for="ActivityId" value="@a.ActivityId">
+                                        <input type="submit" value="Leave">
+                                    </form>
+                                }
+                                @if(t==false)
+                                {
+                                    <form action="/join/@a.ActivityId" method="post">
+                                        <input type="hidden" name="UserId" value="@ViewBag.id">
+                                        <input type="hidden" name="ActivityId" value="@a.ActivityId">
+                                        <input type="submit" value="Join">
+                                    </form>
+                                }
+                                        
+                            }
+                                
+                            
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    
+        <button><a href="/activity/add_activity">Add a New Activity!</a></button>
+</div>

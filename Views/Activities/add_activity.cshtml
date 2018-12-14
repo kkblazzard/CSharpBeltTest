@@ -1,0 +1,47 @@
+<partial name="header"/>
+
+@model Activity
+<link rel="stylesheet" type="text/css" media="screen" href="~/css/Wedding/add_wedding.css"/>
+
+<style>
+
+
+</style>
+<partial name="header"/>
+<h4>Create an Activity</h4>
+
+<div class="form">
+    <form asp-action="Add" asp=Controller="Wedding" method="post">
+        <label asp-for="activity_name"></label>
+        <input asp-for="activity_name">
+        <br>
+        <span asp-Validation-for="activity_name"></span>
+        <br>
+        <label asp-for="date_time"></label>
+        <input class="date" asp-for="date_time">
+        <br>
+        <span asp-Validation-for="date_time"></span>
+        <br>
+        <select asp-for="duration_time">
+            @for(var h=1; h<60; h++)
+            {
+                <option value =@h>@h</option>
+            }
+        </select>
+        <select asp-for="duration_length">
+           
+                <option value ="Hour(s)">Hour(s)</option>
+                <option value ="Minutes(s)">Minutes(s)</option>
+            }
+        </select>
+        <label asp-for="desc"></label>
+        <textarea asp-for="desc"></textarea>
+        <br>
+        <input type=hidden name="creatorId" value="@ViewBag.id"
+        <br>
+        <input type="submit" value="Create Activity">
+
+    </form>
+
+
+</div>

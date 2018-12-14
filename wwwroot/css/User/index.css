@@ -1,0 +1,25 @@
+.registration{
+    display:inline-block;
+    text-align:left;
+    height:400px;
+    width:400px;
+    margin-left:100px;
+}
+.login{
+    display:inline-block;
+    text-align: left;
+    height:400px;
+    width:400px;
+    vertical-align: top;
+    margin-top:29px;
+}
+.block{
+    display:block;
+}
+.inputbox{
+    width:250px;
+}
+.img{
+    height:100px;
+    width:100px;
+}

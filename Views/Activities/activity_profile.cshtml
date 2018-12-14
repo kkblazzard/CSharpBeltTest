@@ -1,0 +1,70 @@
+@model Participant
+<link rel="stylesheet" type="text/css" media="screen" href="~/css/Wedding/wedding_profile.css"/>
+
+<style>
+
+</style>
+<partial name="header"/>
+
+<div class=left>
+    <h4>@ViewBag.activity.activity_name</h4>
+    <h5>Event Coordinator: @ViewBag.Creator.fname</h5>
+    <h5>Date: @ViewBag.activity.date_time.ToString("MMM dd yyyy")</h5>
+    <h5>Description</h5>
+    <p>@ViewBag.activity.desc</p>
+    <h5>Guests:</h5>
+    <div class="guests">
+        @{if(@Model!=null)
+        {
+            foreach(var g in @ViewBag.activity.Participant)
+            { if(@ViewBag.activity.creatorId != g.User.UserId)
+            {
+                <br>
+                <li>@g.User.fname</li>
+                <br>
+            }
+            }
+        }
+        }
+        
+    
+    </div>
+    
+</div>
+<div class="right">
+    @{                      
+        var t=false;
+        @if(@ViewBag.activity.CreatorID == @ViewBag.Id)
+        {
+            <a class="button" href="/delete/@ViewBag.activity.ActivityId">Cancel Activity</a>
+        }
+        else 
+        {
+            @foreach(var e in @ViewBag.activity.Participant)
+                {
+                    if(@e.UserId == @ViewBag.id)
+                    {
+                        t=true;
+                    }
+                }
+            @if(t==true)
+            {
+                <form action="/leave/@ViewBag.activity.ActivityId"  method="post">
+                    <input type="hidden" asp-for="UserId" value="@ViewBag.id">
+                    <input type="hidden" asp-for="ActivityId" value="@ViewBag.activity.ActivityId">
+                    <input type="submit" value="Leave">
+                </form>
+            }
+            @if(t==false)
+            {
+                <form action="/join/@ViewBag.activity.ActivityId" method="post">
+                    <input type="hidden" name="UserId" value="@ViewBag.id">
+                    <input type="hidden" name="ActivityId" value="@ViewBag.activity.ActivityId">
+                    <input type="submit" value="Join">
+                </form>
+            }
+                    
+        }
+    }
+            
+</div>

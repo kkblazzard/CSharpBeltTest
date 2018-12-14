@@ -9,6 +9,6 @@ namespace CSharpBeltTest.Models
 
         public DbSet<User> Users {get;set;}
         public DbSet<Activity> Activity {get;set;}
-        public DbSet<JoinTable> JoinTable{get;set;}
+        public DbSet<Participant> participate{get;set;}
     }
 }
