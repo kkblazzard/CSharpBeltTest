@@ -1,5 +1,3 @@
-<partial name="header"/>
-
 @model Activity
 <link rel="stylesheet" type="text/css" media="screen" href="~/css/Wedding/add_wedding.css"/>
 
@@ -22,6 +20,7 @@
         <br>
         <span asp-Validation-for="date_time"></span>
         <br>
+        <label asp-for="duration_time"></label>
         <select asp-for="duration_time">
             @for(var h=1; h<60; h++)
             {
@@ -29,15 +28,16 @@
             }
         </select>
         <select asp-for="duration_length">
-           
-                <option value ="Hour(s)">Hour(s)</option>
-                <option value ="Minutes(s)">Minutes(s)</option>
+            <option value ="Minutes(s)">Minutes(s)</option>
+            <option value ="Hour(s)">Hour(s)</option>
+            <option value ="Day(s)">Day(s)</option>
             }
         </select>
         <label asp-for="desc"></label>
         <textarea asp-for="desc"></textarea>
+        <span asp-Validation-for="desc"></span>
         <br>
-        <input type=hidden name="creatorId" value="@ViewBag.id"
+        <input type=hidden name="creatorId" value="@ViewBag.id">
         <br>
         <input type="submit" value="Create Activity">
 

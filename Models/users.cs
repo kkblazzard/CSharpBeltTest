@@ -14,10 +14,12 @@ namespace CSharpBeltTest.Models
         [Display(Name="First Name:")] //display name for forms
         [Required] // marks it as a required field
         [MinLength  (3)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string fname {get; set;}
         [Display(Name="Last Name:")] //display name for forms
         [Required] // marks it as a required field
         [MinLength (3)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string lname{get; set;}
         [Display(Name="Email:")] //display name for forms
         [Required] // marks it as a required field

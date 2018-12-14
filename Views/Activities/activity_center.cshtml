@@ -2,18 +2,53 @@
 <link rel="stylesheet" type="text/css" media="screen" href="~/css/Wedding/add_wedding.css"/>
 
 <style>
+.header{
+    height:100px;
+    width:100%;
+    border-bottom:2px solid black;
+}
+.logo{
+    display:inline-block;
+}
+.greeting{
+    display:inline-block;
+    margin-left:25%;
+    padding-right:20px;
+}
+.lft{
+    display:inline-block;
+    margin-left:30%;
+    padding-right:20px;
+}
+.link{
+    display:inline-block;
+}
+.td{
+    border-right:2px solid black;
+}
+.margin{
+margin-top:15px;
+}
+.table{
+    border:2px solid black;
+}
 
 </style>
-<partial name="header"/>
-<div class="table">
+
+<div class=header>
+    <h2 class="logo">Dojo Activity Center</h2>
+    <h5 class="greeting">Welcome @ViewBag.fname</h5>
+    <a class="link" href="/logout">Log off</a>
+</div>
+<div class="margin">
     <table class="table table-striped" class="table table-bordered" class="table table-striped">
         <thead>
             <tr>
-                <th  scope="col">Activity</th>
-                <th scope="col">Date and Time</th>
-                <th scope="col">Duration</th>
-                <th scope="col">Event Coordinator</th>
-                <th scope="col">Number of Participants</th>
+                <th class="td" scope="col">Activity</th>
+                <th class="td" scope="col">Date and Time</th>
+                <th class="td" scope="col">Duration</th>
+                <th class="td" scope="col">Event Coordinator</th>
+                <th class="td" scope="col">Number of Participants</th>
                 <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -22,11 +57,20 @@
                 @foreach(var a in @ViewBag.allactivities)
                 { var t=false;
                     <tr>
-                        <td><a href="activity/@a.ActivityId">@a.activity_name</a></td>
-                        <td>@a.date_time.ToString("MMM dd yyyy")</td>
-                        <td>@a.duration_time  @a.duration_length</td>
-                        <td>a.Users.fname</td>
-                        <td>@a.Participate.Count</td>
+                        <td class="td"><a href="activity/@a.ActivityId">@a.activity_name</a></td>
+                        <td class="td">@a.date_time.ToString("MM / dd @ hh:mm tt")</td>
+                        <td class="td">@a.duration_time  @a.duration_length</td>
+                        <td class="td">
+                            @foreach(var u in ViewBag.allusers)
+                            {
+                            @if(@u.UserId == @a.CreatorID){
+                                @u.fname
+                            }
+                            }
+
+
+                        </td>
+                        <td class="td">@a.Participate.Count</td>
                         <td>    
                             @if(@a.CreatorID == @ViewBag.Id)
                             {
@@ -34,7 +78,7 @@
                             }
                             else 
                             {
-                                @foreach(var e in a.Participant)
+                                @foreach(var e in a.Participate)
                                     {
                                         if(@e.UserId == @ViewBag.id)
                                         {

@@ -14,20 +14,14 @@
     <p>@ViewBag.activity.desc</p>
     <h5>Guests:</h5>
     <div class="guests">
-        @{if(@Model!=null)
-        {
-            foreach(var g in @ViewBag.activity.Participant)
-            { if(@ViewBag.activity.creatorId != g.User.UserId)
-            {
-                <br>
-                <li>@g.User.fname</li>
-                <br>
-            }
-            }
-        }
-        }
         
-    
+            @foreach(var g in @ViewBag.activity.Participate)
+            { 
+                if(@ViewBag.activity.CreatorID != g.User.UserId)
+                {
+                    <h6>@g.User.fname</h6>
+                }
+            }
     </div>
     
 </div>
@@ -35,36 +29,36 @@
     @{                      
         var t=false;
         @if(@ViewBag.activity.CreatorID == @ViewBag.Id)
-        {
-            <a class="button" href="/delete/@ViewBag.activity.ActivityId">Cancel Activity</a>
-        }
+            {
+                <a class="button" href="/delete/@ViewBag.activity.ActivityId">Cancel Activity</a>
+            }
         else 
-        {
-            @foreach(var e in @ViewBag.activity.Participant)
-                {
-                    if(@e.UserId == @ViewBag.id)
+            {
+                @foreach(var e in @ViewBag.activity.Participate)
                     {
-                        t=true;
+                        if(@e.UserId == @ViewBag.id)
+                        {
+                            t=true;
+                        }
                     }
+                @if(t==true)
+                {
+                    <form action="/leave/@ViewBag.activity.ActivityId"  method="post">
+                        <input type="hidden" asp-for="UserId" value="@ViewBag.id">
+                        <input type="hidden" asp-for="ActivityId" value="@ViewBag.activity.ActivityId">
+                        <input type="submit" value="Leave">
+                    </form>
                 }
-            @if(t==true)
-            {
-                <form action="/leave/@ViewBag.activity.ActivityId"  method="post">
-                    <input type="hidden" asp-for="UserId" value="@ViewBag.id">
-                    <input type="hidden" asp-for="ActivityId" value="@ViewBag.activity.ActivityId">
-                    <input type="submit" value="Leave">
-                </form>
-            }
-            @if(t==false)
-            {
-                <form action="/join/@ViewBag.activity.ActivityId" method="post">
-                    <input type="hidden" name="UserId" value="@ViewBag.id">
-                    <input type="hidden" name="ActivityId" value="@ViewBag.activity.ActivityId">
-                    <input type="submit" value="Join">
-                </form>
-            }
+                @if(t==false)
+                {
+                    <form action="/join/@ViewBag.activity.ActivityId" method="post">
+                        <input type="hidden" name="UserId" value="@ViewBag.id">
+                        <input type="hidden" name="ActivityId" value="@ViewBag.activity.ActivityId">
+                        <input type="submit" value="Join">
+                    </form>
+                }
                     
-        }
+            }
     }
             
 </div>
